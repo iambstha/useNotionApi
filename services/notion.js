@@ -8,7 +8,7 @@ const notion = new Client({
 
 const database_id = process.env.NOTION_DATABASE_ID
 
-module.exports = async function getVideos() {
+module.exports = async function getDatas() {
   const payload = {
     path: `databases/${database_id}/query`,
     method: 'POST',
@@ -16,7 +16,7 @@ module.exports = async function getVideos() {
 
   const { results } = await notion.request(payload)
 
-  const videos = results.map((page) => {
+  const datas = results.map((page) => {
     return {
       id: page.id,
       title: page.properties.Name.title[0].text.content,
@@ -26,5 +26,5 @@ module.exports = async function getVideos() {
     }
   })
 
-  return videos
+  return datas
 }

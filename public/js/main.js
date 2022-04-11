@@ -1,8 +1,8 @@
-const videosEl = document.querySelector('#videos')
+const datasEl = document.querySelector('#datas')
 const loadingEl = document.querySelector('#loading')
 let loading = false
 
-const getVideosFromBackend = async () => {
+const getDatasFromBackend = async () => {
   loading = true
   const res = await fetch('http://localhost:5000/videos')
   const data = await res.json()
@@ -10,26 +10,28 @@ const getVideosFromBackend = async () => {
   return data
 }
 
-const addVideosToDom = async () => {
-  const videos = await getVideosFromBackend()
+const addDatasToDom = async () => {
+  const datas = await getDatasFromBackend()
+
 
   if (!loading) {
     loadingEl.innerHTML = ''
   }
 
-  videos.forEach((video) => {
+  datas.forEach((data) => {
+    console.log(data)
     const div = document.createElement('div')
-    div.className = 'video'
+    div.className = 'data'
     div.innerHTML = `
-      <h3>${video.title}</h3>
+      <h3>${data.title}</h3>
       <ul>
-        <li><strong>Release Date: </strong> ${video.date}</li>
-        <li><strong>Description: </strong> ${video.description}</li>
+        <li><strong>Release Date: </strong> ${data.date}</li>
+        <li><strong>Description: </strong> ${data.description}</li>
       </ul>
-      <div class="tags">${video.tags}</div>
+      <div class="tags">${data.tags}</div>
     `
-    videosEl.appendChild(div)
+    datasEl.appendChild(div)
   })
 }
 
-addVideosToDom()
+addDatasToDom()
